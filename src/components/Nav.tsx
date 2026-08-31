@@ -1,0 +1,25 @@
+import Link from "next/link";
+
+export const Nav = () => (
+  <header className="border-b border-line-border bg-surface">
+    <div className="max-w-6xl mx-auto flex items-center justify-between px-6 py-4">
+      <Link href="/" className="text-lg font-bold tracking-tight text-ink-primary">
+        Acquire<span className="text-brand-450">Ops</span>
+      </Link>
+      <nav className="flex items-center gap-6 text-sm font-semibold text-ink-secondary">
+        <Link href="/" className="hover:text-ink-primary transition">
+          Dashboard
+        </Link>
+        <Link href="/properties" className="hover:text-ink-primary transition">
+          Properties
+        </Link>
+        <Link
+          href="/properties/new"
+          className="px-4 py-2 rounded-full bg-brand-450 text-white hover:bg-brand-500 transition"
+        >
+          Add property
+        </Link>
+      </nav>
+    </div>
+  </header>
+);
