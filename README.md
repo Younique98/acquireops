@@ -73,3 +73,19 @@ The underwriting math (`src/lib/underwriting.ts`) and portfolio equity
 trend computation (`src/lib/portfolio.ts`) are unit tested against
 hand-verified expected values, since this app is meant to inform real
 purchase decisions.
+
+## Deploying to Vercel
+
+1. Import this repo into a new Vercel project.
+2. Add a Postgres database from Vercel's Storage tab (Vercel Postgres,
+   or connect Neon/Supabase) - it will inject a connection string
+   (`DATABASE_URL` or `POSTGRES_URL`) automatically, which `src/lib/db.ts`
+   picks up on its own.
+3. In Project Settings -> Environment Variables, set `ADMIN_USERNAME` and
+   `ADMIN_PASSWORD` **before the first deploy** - without them the app is
+   unauthenticated.
+4. Run `seed.sql` once against the new database (via the provider's query
+   console, or `psql <connection-string> -f seed.sql` locally) to create
+   the schema.
+5. Deploy. Delete the seeded example property once you've added your real
+   portfolio.
