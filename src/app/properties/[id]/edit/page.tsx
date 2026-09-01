@@ -1,3 +1,4 @@
+import type { Metadata } from "next";
 import { notFound } from "next/navigation";
 import pool from "@/lib/db";
 import { Property } from "@/lib/types";
@@ -10,6 +11,17 @@ async function getProperty(id: string): Promise<Property | null> {
     numericId,
   ]);
   return result.rows[0] ?? null;
+}
+
+export async function generateMetadata({
+  params,
+}: {
+  params: Promise<{ id: string }>;
+}): Promise<Metadata> {
+  const { id } = await params;
+  const property = await getProperty(id);
+  if (!property) return { title: "Property not found" };
+  return { title: `Edit ${property.address}` };
 }
 
 export default async function EditPropertyPage({

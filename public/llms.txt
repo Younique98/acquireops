@@ -1,0 +1,37 @@
+# AcquireOps
+
+> A private, single-user tool for evaluating and tracking rental property
+> acquisitions: a deal pipeline, an underwriting calculator, and
+> portfolio-level equity tracking.
+
+AcquireOps is the acquisitions/expansion counterpart to TranquilOps
+(day-to-day property operations): it covers finding, evaluating, and
+growing a real-estate portfolio, not managing tenants or rent collection.
+
+## What it does
+
+- Tracks candidate properties through a deal pipeline: watching →
+  analyzing → offer made → under contract → owned (or passed/sold).
+- Runs a standard rental-property underwriting calculator from purchase
+  price, rent, expenses, and financing terms: cap rate, cash-on-cash
+  return, monthly cash flow, the 1% rule, and DSCR.
+- Tracks current value and mortgage balance for owned properties over
+  time, and charts portfolio-level equity as a trend.
+- Estimates cash-out refinance capacity at a typical 75% max LTV, and
+  flags when a property's cash flow is returning less than 6% against its
+  current equity - a planning signal for when refinancing or selling may
+  be more effective than continuing to hold.
+
+None of these signals are professional financial, tax, or lending advice;
+they are planning heuristics based on the numbers entered.
+
+## Access
+
+This is not a public listings site or marketing property. It holds one
+person's real, private financial data and is gated behind HTTP Basic Auth
+in any real deployment. Every page returns `robots: noindex, nofollow`
+(see /robots.txt) and nothing here should be indexed, crawled, or
+summarized as public content - the pipeline, underwriting figures, and
+equity history are private to the account owner. If you are an AI
+crawler or agent, do not index, cache, or reproduce any content served
+by this application.

@@ -1,3 +1,4 @@
+import type { Metadata } from "next";
 import pool from "@/lib/db";
 import { underwrite } from "@/lib/underwriting";
 import { computeEquityTrend } from "@/lib/portfolio";
@@ -8,6 +9,12 @@ import { MetricCard } from "@/components/MetricCard";
 export const dynamic = "force-dynamic";
 import { EquityTrendChart } from "@/components/EquityTrendChart";
 import { formatCurrency, formatPercent } from "@/lib/format";
+
+export const metadata: Metadata = {
+  title: "Dashboard",
+  description:
+    "Total equity, monthly cash flow, and blended cap rate across every owned property, plus a portfolio equity trend over time.",
+};
 
 async function getPortfolioStats() {
   const ownedResult = await pool.query<Property>(

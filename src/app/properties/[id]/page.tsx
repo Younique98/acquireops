@@ -1,7 +1,8 @@
+import type { Metadata } from "next";
 import Link from "next/link";
 import { notFound } from "next/navigation";
 import pool from "@/lib/db";
-import { Property } from "@/lib/types";
+import { Property, STAGE_LABELS } from "@/lib/types";
 import {
   underwrite,
   equity as computeEquity,
@@ -22,6 +23,28 @@ async function getProperty(id: string): Promise<Property | null> {
     numericId,
   ]);
   return result.rows[0] ?? null;
+}
+
+// One unique, descriptive title per property (address + city/state) rather
+// than a single generic title repeated across every listing page - this
+// stays private (root layout sets robots: noindex) but still gives each
+// tab/bookmark/browser-history entry something specific to identify it by.
+export async function generateMetadata({
+  params,
+}: {
+  params: Promise<{ id: string }>;
+}): Promise<Metadata> {
+  const { id } = await params;
+  const property = await getProperty(id);
+  if (!property) return { title: "Property not found" };
+
+  const location = [property.city, property.state].filter(Boolean).join(", ");
+  return {
+    title: location ? `${property.address}, ${location}` : property.address,
+    description: `${property.address} - ${formatCurrency(
+      Number(property.purchase_price),
+    )} purchase price, ${formatCurrency(Number(property.monthly_rent))}/mo rent. ${STAGE_LABELS[property.stage]} in the deal pipeline.`,
+  };
 }
 
 export default async function PropertyDetailPage({

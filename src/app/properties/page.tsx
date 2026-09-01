@@ -1,3 +1,4 @@
+import type { Metadata } from "next";
 import Link from "next/link";
 import pool from "@/lib/db";
 import { underwrite } from "@/lib/underwriting";
@@ -5,6 +6,12 @@ import { Property, Stage, STAGE_LABELS } from "@/lib/types";
 import { StageBadge } from "@/components/StageBadge";
 import { formatCurrency, formatPercent } from "@/lib/format";
 import clsx from "clsx";
+
+export const metadata: Metadata = {
+  title: "Properties",
+  description:
+    "Every property in the deal pipeline, from watching through owned, with live cash flow and cap rate for each.",
+};
 
 const FILTERS: (Stage | null)[] = [
   null,

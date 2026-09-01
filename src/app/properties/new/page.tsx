@@ -1,4 +1,11 @@
+import type { Metadata } from "next";
 import { PropertyForm } from "@/components/PropertyForm";
+
+export const metadata: Metadata = {
+  title: "Add a property",
+  description:
+    "Enter purchase price, rent, expenses, and financing terms for a candidate property to get cap rate, cash-on-cash return, and DSCR.",
+};
 
 export default function NewPropertyPage() {
   return (
