@@ -68,13 +68,13 @@ export default async function PropertyDetailPage({
 
   return (
     <main className="max-w-4xl mx-auto px-6 py-10">
-      <Link href="/dashboard/properties" className="text-sm font-semibold text-brand-text hover:underline">
+      <Link href="/dashboard/properties" className="text-sm font-semibold text-navy-text hover:underline">
         &larr; All properties
       </Link>
 
       <div className="mt-4 flex items-start justify-between gap-4 flex-wrap">
         <div>
-          <h1 className="text-3xl font-extrabold tracking-tight text-ink-primary">
+          <h1 className="font-display text-3xl font-semibold tracking-tight text-ink-primary">
             {property.address}
           </h1>
           <p className="text-ink-secondary">
@@ -85,7 +85,7 @@ export default async function PropertyDetailPage({
           <StageBadge stage={property.stage} />
           <Link
             href={`/dashboard/properties/${property.id}/edit`}
-            className="px-4 py-2 rounded-full border border-line-border text-sm font-semibold text-ink-secondary hover:border-brand-300 transition"
+            className="px-4 py-2 rounded-full border border-line text-sm font-semibold text-ink-secondary hover:border-navy transition"
           >
             Edit
           </Link>
@@ -94,13 +94,13 @@ export default async function PropertyDetailPage({
       </div>
 
       {property.notes && (
-        <p className="mt-4 text-ink-secondary bg-surface border border-line-border rounded-lg p-4">
+        <p className="mt-4 text-ink-secondary bg-surface border border-line rounded-lg p-4">
           {property.notes}
         </p>
       )}
 
       <section className="mt-8">
-        <h2 className="text-lg font-bold text-ink-primary mb-3">Underwriting</h2>
+        <h2 className="font-display text-lg font-semibold text-ink-primary mb-3">Underwriting</h2>
         <div className="grid gap-4 sm:grid-cols-3">
           <MetricCard
             label="Monthly cash flow"
@@ -128,7 +128,7 @@ export default async function PropertyDetailPage({
 
       {hasOwnershipData && (
         <section className="mt-8">
-          <h2 className="text-lg font-bold text-ink-primary mb-3">Equity</h2>
+          <h2 className="font-display text-lg font-semibold text-ink-primary mb-3">Equity</h2>
           <div className="grid gap-4 sm:grid-cols-3">
             <MetricCard label="Current equity" value={formatCurrency(currentEquity)} />
             <MetricCard

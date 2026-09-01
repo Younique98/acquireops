@@ -9,46 +9,33 @@ const config: Config = {
   theme: {
     extend: {
       colors: {
-        surface: "var(--surface-1)",
-        plane: "var(--page-plane)",
+        bg: "var(--bg)",
+        surface: "var(--surface)",
+        "surface-2": "var(--surface-2)",
+        line: "var(--border)",
         ink: {
-          primary: "var(--text-primary)",
-          secondary: "var(--text-secondary)",
-          muted: "var(--text-muted)",
+          primary: "var(--ink-primary)",
+          secondary: "var(--ink-secondary)",
+          muted: "var(--ink-muted)",
         },
-        line: {
-          grid: "var(--gridline)",
-          axis: "var(--baseline)",
-          border: "var(--border)",
-        },
-        brand: {
-          100: "var(--blue-100)",
-          150: "var(--blue-150)",
-          200: "var(--blue-200)",
-          250: "var(--blue-250)",
-          300: "var(--blue-300)",
-          350: "var(--blue-350)",
-          400: "var(--blue-400)",
-          450: "var(--blue-450)",
-          500: "var(--blue-500)",
-          550: "var(--blue-550)",
-          600: "var(--blue-600)",
-          // Theme-aware: for TEXT (wordmark, links) on the page background.
-          // The numbered steps stay static Tailwind values for solid
-          // button/badge fills, which don't need to shift with theme.
-          text: "var(--brand-text)",
+        navy: {
+          DEFAULT: "var(--navy)",
+          hover: "var(--navy-hover)",
+          text: "var(--navy-text)",
         },
         status: {
           good: "var(--status-good)",
           goodText: "var(--status-good-text)",
-          warning: "var(--status-warning)",
-          serious: "var(--status-serious)",
           critical: "var(--status-critical)",
           criticalText: "var(--status-critical-text)",
+          warning: "var(--status-warning)",
+          warningText: "var(--status-warning-text)",
         },
       },
       fontFamily: {
-        sans: ["system-ui", "-apple-system", "Segoe UI", "sans-serif"],
+        sans: ["var(--font-body)", "ui-sans-serif", "system-ui", "sans-serif"],
+        display: ["var(--font-display)", "ui-serif", "Georgia", "serif"],
+        mono: ["var(--font-mono)", "ui-monospace", "SFMono-Regular", "monospace"],
       },
     },
   },

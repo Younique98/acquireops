@@ -13,7 +13,7 @@ export const DeletePropertyButton = ({ id }: { id: number }) => {
       <button
         type="button"
         onClick={() => setConfirming(true)}
-        className="px-4 py-2 rounded-full border border-line-border text-sm font-semibold text-status-criticalText hover:border-status-critical transition"
+        className="px-4 py-2 rounded-full border border-line text-sm font-semibold text-status-criticalText hover:border-status-critical transition"
       >
         Delete
       </button>
@@ -39,7 +39,7 @@ export const DeletePropertyButton = ({ id }: { id: number }) => {
       <button
         type="button"
         onClick={() => setConfirming(false)}
-        className="px-3 py-1.5 rounded-full border border-line-border text-sm font-semibold text-ink-secondary"
+        className="px-3 py-1.5 rounded-full border border-line text-sm font-semibold text-ink-secondary"
       >
         Cancel
       </button>

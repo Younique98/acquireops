@@ -4,76 +4,56 @@
 
 :root {
   color-scheme: light;
-  --surface-1: #fcfcfb;
-  --page-plane: #f9f9f7;
-  --text-primary: #0b0b0b;
-  --text-secondary: #52514e;
-  --text-muted: #6e6b64;
-  --gridline: #e1e0d9;
-  --baseline: #c3c2b7;
-  --border: rgba(11, 11, 11, 0.1);
+  --bg: #f6f2e8;
+  --surface: #fffefb;
+  --surface-2: #ece5d3;
+  --border: #ddd3ba;
+  --ink-primary: #1a2233;
+  --ink-secondary: #4a5568;
+  --ink-muted: #5f6a7a;
 
-  --blue-100: #cde2fb;
-  --blue-150: #b7d3f6;
-  --blue-200: #9ec5f4;
-  --blue-250: #86b6ef;
-  --blue-300: #6da7ec;
-  --blue-350: #5598e7;
-  --blue-400: #3987e5;
-  --blue-450: #2a78d6;
-  --blue-500: #256abf;
-  --blue-550: #1c5cab;
-  --blue-600: #184f95;
+  /* Fill (buttons/badges with white text) stays fixed and dark enough
+     for that pairing in both themes; text usage gets a brighter step
+     in dark mode to read against a near-black page - same text-vs-fill
+     split used across every repo in this pass once dark mode is
+     involved. */
+  --navy: #2b3f6b;
+  --navy-hover: #22335a;
+  --navy-text: #2b3f6b;
 
-  /* Fill-oriented: paired with white text on badges/buttons, so this
-     needs to stay dark enough for that pairing regardless of theme -
-     the original #0ca30c only cleared 3.35:1 with white text. */
-  --status-good: #0b7a0b;
-  /* Text-oriented: same darkened value reads fine in light mode, but a
-     bright green is needed against a near-black dark-mode background -
-     the original #0ca30c already worked there, so dark mode keeps it. */
-  --status-good-text: #0b7a0b;
-  --status-warning: #fab219;
-  --status-serious: #ec835a;
-  --status-critical: #d03b3b;
-  /* Text-oriented critical - light mode's #d03b3b already clears 4.5:1
-     against a light background, dark mode needs a brighter red (same
-     split reasoning as status-good above). */
-  --status-critical-text: #d03b3b;
-  /* brand-450 rendered as TEXT (wordmark, links) on the page background
-     fails contrast in both themes (4.1-4.4:1) - bg-brand-450 buttons are
-     unaffected (that's a different contrast pair: white text ON
-     brand-450, not brand-450 text on the page). */
-  --brand-text: #1c5cab;
+  --status-good: #2f6b46;
+  --status-good-text: #2f6b46;
+  --status-critical: #a8412c;
+  --status-critical-text: #a8412c;
+  --status-warning: #a9781f;
+  --status-warning-text: #846017;
 }
 
 @media (prefers-color-scheme: dark) {
   :root {
     color-scheme: dark;
-    --surface-1: #1a1a19;
-    --page-plane: #0d0d0d;
-    --text-primary: #ffffff;
-    --text-secondary: #c3c2b7;
-    --text-muted: #898781;
-    --gridline: #2c2c2a;
-    --baseline: #383835;
-    --border: rgba(255, 255, 255, 0.1);
+    --bg: #10141f;
+    --surface: #171d2c;
+    --surface-2: #1e2536;
+    --border: #2b3348;
+    --ink-primary: #f2efe6;
+    --ink-secondary: #c3c8d4;
+    --ink-muted: #8b93a3;
 
-    --blue-400: #3987e5;
-    --blue-450: #2a78d6;
-    --blue-600: #184f95;
+    --navy: #2b3f6b;
+    --navy-hover: #22335a;
+    --navy-text: #7f9bd6;
 
-    --status-good: #0b7a0b;
-    --status-good-text: #0ca30c;
-    --status-warning: #fab219;
-    --status-serious: #ec835a;
-    --status-critical: #d03b3b;
-    --status-critical-text: #f0785e;
-    --brand-text: #5598e7;
+    --status-good: #2f6b46;
+    --status-good-text: #5fae7c;
+    --status-critical: #a8412c;
+    --status-critical-text: #e0785f;
+    --status-warning: #a9781f;
+    --status-warning-text: #d9a53f;
   }
 }
 
 body {
-  background: var(--page-plane);
-  color: var(--text-primary);
+  background: var(--bg);
+  color: var(--ink-primary);
 }

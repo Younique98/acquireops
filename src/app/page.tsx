@@ -22,10 +22,10 @@ const FEATURES = [
 export default function Home() {
   return (
     <main className="min-h-screen">
-      <header className="border-b border-line-border">
+      <header className="border-b border-line">
         <div className="max-w-5xl mx-auto flex items-center justify-between px-6 py-4">
-          <span className="text-lg font-bold tracking-tight text-ink-primary">
-            Acquire<span className="text-brand-text">Ops</span>
+          <span className="font-display text-lg font-semibold tracking-tight text-ink-primary">
+            Acquire<span className="text-navy-text">Ops</span>
           </span>
           <nav className="flex items-center gap-4 text-sm font-semibold">
             <Link href="/login" className="text-ink-secondary hover:text-ink-primary transition">
@@ -33,7 +33,7 @@ export default function Home() {
             </Link>
             <Link
               href="/signup"
-              className="px-4 py-2 rounded-full bg-brand-500 text-white hover:bg-brand-600 transition"
+              className="px-4 py-2 rounded-full bg-navy text-white hover:bg-navy-hover transition"
             >
               Get started
             </Link>
@@ -42,7 +42,7 @@ export default function Home() {
       </header>
 
       <section className="px-6 pt-20 pb-24 text-center">
-        <h1 className="text-4xl sm:text-5xl font-extrabold tracking-tight text-ink-primary max-w-2xl mx-auto">
+        <h1 className="font-display text-4xl sm:text-5xl font-semibold tracking-tight text-ink-primary max-w-2xl mx-auto text-balance">
           Underwrite acquisitions. Track your portfolio. Know when to redeploy capital.
         </h1>
         <p className="mt-6 text-lg text-ink-secondary max-w-xl mx-auto">
@@ -53,13 +53,13 @@ export default function Home() {
         <div className="mt-8 flex items-center justify-center gap-4">
           <Link
             href="/signup"
-            className="px-6 py-3 rounded-full bg-brand-500 text-white font-semibold hover:bg-brand-600 transition"
+            className="px-6 py-3 rounded-full bg-navy text-white font-semibold hover:bg-navy-hover transition"
           >
             Create your account
           </Link>
           <Link
             href="/login"
-            className="px-6 py-3 rounded-full border border-line-border font-semibold text-ink-secondary hover:border-brand-300 transition"
+            className="px-6 py-3 rounded-full border border-line font-semibold text-ink-secondary hover:border-navy transition"
           >
             Log in
           </Link>
@@ -69,8 +69,8 @@ export default function Home() {
       <section className="px-6 pb-24">
         <div className="max-w-4xl mx-auto grid gap-6 sm:grid-cols-2">
           {FEATURES.map((feature) => (
-            <div key={feature.title} className="rounded-2xl border border-line-border bg-surface p-6">
-              <h2 className="font-bold text-ink-primary mb-2">{feature.title}</h2>
+            <div key={feature.title} className="rounded-2xl border border-line bg-surface p-6">
+              <h2 className="font-display font-semibold text-ink-primary mb-2">{feature.title}</h2>
               <p className="text-sm text-ink-secondary">{feature.body}</p>
             </div>
           ))}

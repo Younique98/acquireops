@@ -47,7 +47,7 @@ export const EquityTrendChart = ({ points }: { points: EquityTrendPoint[] }) => 
 
   if (points.length === 0) {
     return (
-      <div className="rounded-2xl border border-line-border bg-surface p-8 text-center text-ink-muted text-sm">
+      <div className="rounded-2xl border border-line bg-surface p-8 text-center text-ink-muted text-sm">
         No equity history yet. Once you update a property&rsquo;s value or mortgage
         balance, this chart will start tracking your portfolio equity over time.
       </div>
@@ -59,7 +59,7 @@ export const EquityTrendChart = ({ points }: { points: EquityTrendPoint[] }) => 
   const lastPoint = points[points.length - 1];
 
   return (
-    <div className="rounded-2xl border border-line-border bg-surface p-5 relative">
+    <div className="rounded-2xl border border-line bg-surface p-5 relative">
       <p className="text-sm font-semibold text-ink-secondary mb-2">Portfolio equity over time</p>
       <svg
         viewBox={`0 0 ${WIDTH} ${HEIGHT}`}
@@ -72,16 +72,16 @@ export const EquityTrendChart = ({ points }: { points: EquityTrendPoint[] }) => 
             x2={WIDTH - PADDING.right}
             y1={zeroLineY}
             y2={zeroLineY}
-            stroke="var(--baseline)"
+            stroke="var(--border)"
             strokeWidth={1}
           />
         )}
 
-        <path d={areaPath} fill="var(--blue-400)" fillOpacity={0.1} stroke="none" />
+        <path d={areaPath} fill="var(--navy)" fillOpacity={0.1} stroke="none" />
         <path
           d={path}
           fill="none"
-          stroke="var(--blue-400)"
+          stroke="var(--navy)"
           strokeWidth={2}
           strokeLinejoin="round"
           strokeLinecap="round"
@@ -92,8 +92,8 @@ export const EquityTrendChart = ({ points }: { points: EquityTrendPoint[] }) => 
           cx={scaleX(points.length - 1)}
           cy={scaleY(lastPoint.totalEquity)}
           r={4}
-          fill="var(--blue-400)"
-          stroke="var(--surface-1)"
+          fill="var(--navy)"
+          stroke="var(--surface)"
           strokeWidth={2}
         />
         <text
@@ -125,15 +125,15 @@ export const EquityTrendChart = ({ points }: { points: EquityTrendPoint[] }) => 
               x2={scaleX(hoverIndex!)}
               y1={PADDING.top}
               y2={HEIGHT - PADDING.bottom}
-              stroke="var(--baseline)"
+              stroke="var(--border)"
               strokeWidth={1}
             />
             <circle
               cx={scaleX(hoverIndex!)}
               cy={scaleY(hovered.totalEquity)}
               r={4}
-              fill="var(--blue-400)"
-              stroke="var(--surface-1)"
+              fill="var(--navy)"
+              stroke="var(--surface)"
               strokeWidth={2}
             />
           </>
@@ -141,7 +141,7 @@ export const EquityTrendChart = ({ points }: { points: EquityTrendPoint[] }) => 
       </svg>
 
       {hovered && (
-        <div className="absolute top-5 right-5 rounded-lg border border-line-border bg-surface px-3 py-2 text-xs shadow-sm">
+        <div className="absolute top-5 right-5 rounded-lg border border-line bg-surface px-3 py-2 text-xs shadow-sm">
           <p className="font-semibold text-ink-primary">
             {formatCurrency(hovered.totalEquity)}
           </p>

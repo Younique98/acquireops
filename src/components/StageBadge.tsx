@@ -1,35 +1,46 @@
 import { Stage, STAGE_LABELS } from "@/lib/types";
 import clsx from "clsx";
 
-// Pipeline stages (watching -> under_contract) use the ordinal blue ramp to
-// show progression. Owned/passed/sold are terminal states, not progression,
-// so they get distinct treatments rather than continuing the ramp.
-//
-// White text only clears 4.5:1 contrast from brand-500 onward - brand-300
-// and brand-450 (offer_made/under_contract's original steps) both failed
-// WCAG AA with white text, so those two now sit on the darker end of the
-// ramp that actually works (500/550) rather than continuing visually from
-// analyzing's lighter steps. bg-ink-secondary flips to a light gray in
-// dark mode (correct for its usual job as body text), which made "sold"
-// nearly invisible as a dark-mode badge fill (1.79:1) - swapped for a
-// fixed neutral that doesn't move with theme.
-const STAGE_STYLES: Record<Stage, string> = {
-  watching: "bg-brand-100 text-brand-600",
-  analyzing: "bg-brand-200 text-brand-600",
-  offer_made: "bg-brand-500 text-white",
-  under_contract: "bg-brand-550 text-white",
+// The four non-terminal stages are a genuine sequence a deal moves through
+// in order, so a dot-progress indicator earns its place here (vs. decoration
+// for its own sake) - filled dots show how far along the pipeline this deal
+// is. Terminal states (owned/passed/sold) aren't progression, so they get a
+// plain solid badge instead of continuing the dots.
+const PIPELINE_STAGES: Stage[] = ["watching", "analyzing", "offer_made", "under_contract"];
+
+const TERMINAL_STYLES: Partial<Record<Stage, string>> = {
   owned: "bg-status-good text-white",
-  passed: "bg-line-grid text-ink-secondary",
+  passed: "bg-surface-2 text-ink-secondary border border-line",
   sold: "bg-gray-700 text-white",
 };
 
-export const StageBadge = ({ stage }: { stage: Stage }) => (
-  <span
-    className={clsx(
-      "inline-block px-2.5 py-1 rounded-full text-xs font-semibold whitespace-nowrap",
-      STAGE_STYLES[stage],
-    )}
-  >
-    {STAGE_LABELS[stage]}
-  </span>
-);
+export const StageBadge = ({ stage }: { stage: Stage }) => {
+  const pipelineIndex = PIPELINE_STAGES.indexOf(stage);
+
+  if (pipelineIndex === -1) {
+    return (
+      <span
+        className={clsx(
+          "inline-block px-2.5 py-1 rounded-full text-xs font-semibold whitespace-nowrap",
+          TERMINAL_STYLES[stage],
+        )}
+      >
+        {STAGE_LABELS[stage]}
+      </span>
+    );
+  }
+
+  return (
+    <span className="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-full text-xs font-semibold whitespace-nowrap border border-line bg-surface text-ink-secondary">
+      <span className="flex items-center gap-0.5" aria-hidden="true">
+        {PIPELINE_STAGES.map((s, i) => (
+          <span
+            key={s}
+            className={clsx("w-1.5 h-1.5 rounded-full", i <= pipelineIndex ? "bg-navy" : "bg-line")}
+          />
+        ))}
+      </span>
+      {STAGE_LABELS[stage]}
+    </span>
+  );
+};
