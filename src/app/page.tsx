@@ -1,103 +1,81 @@
-import pool from "@/lib/db";
-import { underwrite } from "@/lib/underwriting";
-import { computeEquityTrend } from "@/lib/portfolio";
-import { Property, EquitySnapshot } from "@/lib/types";
-import { MetricCard } from "@/components/MetricCard";
+import Link from "next/link";
 
-// Always reflects live portfolio data - never statically prerendered.
-export const dynamic = "force-dynamic";
-import { EquityTrendChart } from "@/components/EquityTrendChart";
-import { formatCurrency, formatPercent } from "@/lib/format";
+const FEATURES = [
+  {
+    title: "Underwrite before you offer",
+    body: "Cap rate, cash-on-cash return, the 1% rule, and DSCR - calculated the moment you enter a property's numbers, not after you've already made an offer.",
+  },
+  {
+    title: "Run your pipeline",
+    body: "Watching, analyzing, offer made, under contract, owned, sold - track every deal through the stage it's actually in.",
+  },
+  {
+    title: "Know when to hold or redeploy",
+    body: "Once a property is owned, AcquireOps tracks its equity over time and flags when its return on equity has dropped low enough that a refinance or sale could fund a better acquisition.",
+  },
+  {
+    title: "Your portfolio, privately",
+    body: "Every account's properties, deal notes, and equity history are isolated to that account - never visible to anyone else.",
+  },
+];
 
-async function getPortfolioStats() {
-  const ownedResult = await pool.query<Property>(
-    "SELECT * FROM properties WHERE stage = 'owned' ORDER BY address ASC",
-  );
-  const owned = ownedResult.rows;
-
-  let totalEquity = 0;
-  let totalMonthlyCashFlow = 0;
-  let totalAnnualNOI = 0;
-  let totalValueForCapRate = 0;
-
-  for (const property of owned) {
-    const result = underwrite({
-      purchasePrice: Number(property.purchase_price),
-      monthlyRent: Number(property.monthly_rent),
-      propertyTaxAnnual: Number(property.property_tax_annual),
-      insuranceAnnual: Number(property.insurance_annual),
-      hoaMonthly: Number(property.hoa_monthly),
-      maintenancePct: Number(property.maintenance_pct),
-      vacancyPct: Number(property.vacancy_pct),
-      managementPct: Number(property.management_pct),
-      downPaymentPct: Number(property.down_payment_pct),
-      interestRatePct: Number(property.interest_rate_pct),
-      loanTermYears: Number(property.loan_term_years),
-      closingCosts: Number(property.closing_costs),
-    });
-
-    totalMonthlyCashFlow += result.monthlyCashFlow;
-    totalAnnualNOI += result.annualNOI;
-
-    const valueForCapRate = property.current_value ?? property.purchase_price;
-    totalValueForCapRate += Number(valueForCapRate);
-
-    if (property.current_value !== null && property.mortgage_balance !== null) {
-      totalEquity += Number(property.current_value) - Number(property.mortgage_balance);
-    }
-  }
-
-  const blendedCapRatePct =
-    totalValueForCapRate > 0 ? (totalAnnualNOI / totalValueForCapRate) * 100 : 0;
-
-  const propertyIds = owned.map(p => p.id);
-  let equityTrend: ReturnType<typeof computeEquityTrend> = [];
-  if (propertyIds.length > 0) {
-    const snapshotsResult = await pool.query<EquitySnapshot>(
-      `SELECT * FROM equity_snapshots WHERE property_id = ANY($1::int[]) ORDER BY recorded_at ASC`,
-      [propertyIds],
-    );
-    equityTrend = computeEquityTrend(snapshotsResult.rows);
-  }
-
-  return {
-    ownedCount: owned.length,
-    totalEquity,
-    totalMonthlyCashFlow,
-    blendedCapRatePct,
-    equityTrend,
-  };
-}
-
-export default async function DashboardPage() {
-  const stats = await getPortfolioStats();
-
+export default function Home() {
   return (
-    <main className="max-w-6xl mx-auto px-6 py-10">
-      <h1 className="text-3xl font-extrabold tracking-tight text-ink-primary mb-1">
-        Portfolio dashboard
-      </h1>
-      <p className="text-ink-secondary mb-8">
-        {stats.ownedCount} owned {stats.ownedCount === 1 ? "property" : "properties"}
-      </p>
+    <main className="min-h-screen">
+      <header className="border-b border-line-border">
+        <div className="max-w-5xl mx-auto flex items-center justify-between px-6 py-4">
+          <span className="text-lg font-bold tracking-tight text-ink-primary">
+            Acquire<span className="text-brand-450">Ops</span>
+          </span>
+          <nav className="flex items-center gap-4 text-sm font-semibold">
+            <Link href="/login" className="text-ink-secondary hover:text-ink-primary transition">
+              Log in
+            </Link>
+            <Link
+              href="/signup"
+              className="px-4 py-2 rounded-full bg-brand-450 text-white hover:bg-brand-500 transition"
+            >
+              Get started
+            </Link>
+          </nav>
+        </div>
+      </header>
 
-      <div className="grid gap-4 sm:grid-cols-3 mb-8">
-        <MetricCard
-          label="Total equity"
-          value={formatCurrency(stats.totalEquity)}
-        />
-        <MetricCard
-          label="Monthly cash flow"
-          value={formatCurrency(stats.totalMonthlyCashFlow)}
-          tone={stats.totalMonthlyCashFlow >= 0 ? "good" : "critical"}
-        />
-        <MetricCard
-          label="Blended cap rate"
-          value={formatPercent(stats.blendedCapRatePct)}
-        />
-      </div>
+      <section className="px-6 pt-20 pb-24 text-center">
+        <h1 className="text-4xl sm:text-5xl font-extrabold tracking-tight text-ink-primary max-w-2xl mx-auto">
+          Underwrite acquisitions. Track your portfolio. Know when to redeploy capital.
+        </h1>
+        <p className="mt-6 text-lg text-ink-secondary max-w-xl mx-auto">
+          AcquireOps is the deal pipeline and underwriting calculator for
+          landlords growing a rental portfolio - from first-look numbers on
+          a potential deal to equity tracking on what you already own.
+        </p>
+        <div className="mt-8 flex items-center justify-center gap-4">
+          <Link
+            href="/signup"
+            className="px-6 py-3 rounded-full bg-brand-450 text-white font-semibold hover:bg-brand-500 transition"
+          >
+            Create your account
+          </Link>
+          <Link
+            href="/login"
+            className="px-6 py-3 rounded-full border border-line-border font-semibold text-ink-secondary hover:border-brand-300 transition"
+          >
+            Log in
+          </Link>
+        </div>
+      </section>
 
-      <EquityTrendChart points={stats.equityTrend} />
+      <section className="px-6 pb-24">
+        <div className="max-w-4xl mx-auto grid gap-6 sm:grid-cols-2">
+          {FEATURES.map((feature) => (
+            <div key={feature.title} className="rounded-2xl border border-line-border bg-surface p-6">
+              <h2 className="font-bold text-ink-primary mb-2">{feature.title}</h2>
+              <p className="text-sm text-ink-secondary">{feature.body}</p>
+            </div>
+          ))}
+        </div>
+      </section>
     </main>
   );
 }

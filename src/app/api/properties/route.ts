@@ -1,6 +1,7 @@
 import { NextRequest, NextResponse } from "next/server";
 import pool from "@/lib/db";
 import { Stage } from "@/lib/types";
+import { getCurrentUser } from "@/lib/session";
 
 const VALID_STAGES: Stage[] = [
   "watching",
@@ -13,6 +14,9 @@ const VALID_STAGES: Stage[] = [
 ];
 
 export async function GET(request: NextRequest) {
+  const user = await getCurrentUser();
+  if (!user) return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
+
   const stage = request.nextUrl.searchParams.get("stage");
 
   try {
@@ -21,13 +25,16 @@ export async function GET(request: NextRequest) {
         return NextResponse.json({ error: "Invalid stage value." }, { status: 400 });
       }
       const result = await pool.query(
-        "SELECT * FROM properties WHERE stage = $1 ORDER BY updated_at DESC",
-        [stage],
+        "SELECT * FROM properties WHERE user_id = $1 AND stage = $2 ORDER BY updated_at DESC",
+        [user.id, stage],
       );
       return NextResponse.json(result.rows);
     }
 
-    const result = await pool.query("SELECT * FROM properties ORDER BY updated_at DESC");
+    const result = await pool.query(
+      "SELECT * FROM properties WHERE user_id = $1 ORDER BY updated_at DESC",
+      [user.id],
+    );
     return NextResponse.json(result.rows);
   } catch (error) {
     console.error(
@@ -41,6 +48,9 @@ export async function GET(request: NextRequest) {
 }
 
 export async function POST(request: NextRequest) {
+  const user = await getCurrentUser();
+  if (!user) return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
+
   const body = await request.json().catch(() => null);
   if (!body) {
     return NextResponse.json({ error: "Invalid request body." }, { status: 400 });
@@ -66,13 +76,14 @@ export async function POST(request: NextRequest) {
   try {
     const result = await pool.query(
       `INSERT INTO properties (
-         address, city, state, zip, stage, notes,
+         user_id, address, city, state, zip, stage, notes,
          purchase_price, monthly_rent, property_tax_annual, insurance_annual,
          hoa_monthly, maintenance_pct, vacancy_pct, management_pct,
          down_payment_pct, interest_rate_pct, loan_term_years, closing_costs
-       ) VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9, $10, $11, $12, $13, $14, $15, $16, $17, $18)
+       ) VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9, $10, $11, $12, $13, $14, $15, $16, $17, $18, $19)
        RETURNING *`,
       [
+        user.id,
         address,
         body.city ?? null,
         body.state ?? null,

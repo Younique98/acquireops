@@ -13,14 +13,16 @@ import { StageBadge } from "@/components/StageBadge";
 import { MetricCard } from "@/components/MetricCard";
 import { formatCurrency, formatPercent } from "@/lib/format";
 import { DeletePropertyButton } from "@/components/DeletePropertyButton";
+import { getCurrentUser } from "@/lib/session";
 import clsx from "clsx";
 
-async function getProperty(id: string): Promise<Property | null> {
+async function getProperty(userId: number, id: string): Promise<Property | null> {
   const numericId = parseInt(id, 10);
   if (!Number.isInteger(numericId)) return null;
-  const result = await pool.query<Property>("SELECT * FROM properties WHERE id = $1", [
-    numericId,
-  ]);
+  const result = await pool.query<Property>(
+    "SELECT * FROM properties WHERE id = $1 AND user_id = $2",
+    [numericId, userId],
+  );
   return result.rows[0] ?? null;
 }
 
@@ -29,8 +31,11 @@ export default async function PropertyDetailPage({
 }: {
   params: Promise<{ id: string }>;
 }) {
+  const user = await getCurrentUser();
+  if (!user) return null;
+
   const { id } = await params;
-  const property = await getProperty(id);
+  const property = await getProperty(user.id, id);
   if (!property) notFound();
 
   const result = underwrite({
@@ -63,7 +68,7 @@ export default async function PropertyDetailPage({
 
   return (
     <main className="max-w-4xl mx-auto px-6 py-10">
-      <Link href="/properties" className="text-sm font-semibold text-brand-450 hover:underline">
+      <Link href="/dashboard/properties" className="text-sm font-semibold text-brand-450 hover:underline">
         &larr; All properties
       </Link>
 
@@ -79,7 +84,7 @@ export default async function PropertyDetailPage({
         <div className="flex items-center gap-3">
           <StageBadge stage={property.stage} />
           <Link
-            href={`/properties/${property.id}/edit`}
+            href={`/dashboard/properties/${property.id}/edit`}
             className="px-4 py-2 rounded-full border border-line-border text-sm font-semibold text-ink-secondary hover:border-brand-300 transition"
           >
             Edit

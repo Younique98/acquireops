@@ -1,6 +1,7 @@
 import { NextRequest, NextResponse } from "next/server";
 import pool from "@/lib/db";
 import { Stage } from "@/lib/types";
+import { getCurrentUser } from "@/lib/session";
 
 const VALID_STAGES: Stage[] = [
   "watching",
@@ -46,13 +47,19 @@ export async function GET(
   _request: NextRequest,
   { params }: { params: Promise<{ id: string }> },
 ) {
+  const user = await getCurrentUser();
+  if (!user) return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
+
   const id = parseId((await params).id);
   if (id === null) {
     return NextResponse.json({ error: "Invalid property id." }, { status: 400 });
   }
 
   try {
-    const result = await pool.query("SELECT * FROM properties WHERE id = $1", [id]);
+    const result = await pool.query("SELECT * FROM properties WHERE id = $1 AND user_id = $2", [
+      id,
+      user.id,
+    ]);
     if (result.rows.length === 0) {
       return NextResponse.json({ error: "Property not found." }, { status: 404 });
     }
@@ -72,6 +79,9 @@ export async function PATCH(
   request: NextRequest,
   { params }: { params: Promise<{ id: string }> },
 ) {
+  const user = await getCurrentUser();
+  if (!user) return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
+
   const id = parseId((await params).id);
   if (id === null) {
     return NextResponse.json({ error: "Invalid property id." }, { status: 400 });
@@ -109,9 +119,9 @@ export async function PATCH(
     try {
       await client.query("BEGIN");
 
-      values.push(id);
+      values.push(id, user.id);
       const updateResult = await client.query(
-        `UPDATE properties SET ${setClauses.join(", ")} WHERE id = $${paramIndex} RETURNING *`,
+        `UPDATE properties SET ${setClauses.join(", ")} WHERE id = $${paramIndex} AND user_id = $${paramIndex + 1} RETURNING *`,
         values,
       );
 
@@ -157,13 +167,19 @@ export async function DELETE(
   _request: NextRequest,
   { params }: { params: Promise<{ id: string }> },
 ) {
+  const user = await getCurrentUser();
+  if (!user) return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
+
   const id = parseId((await params).id);
   if (id === null) {
     return NextResponse.json({ error: "Invalid property id." }, { status: 400 });
   }
 
   try {
-    const result = await pool.query("DELETE FROM properties WHERE id = $1 RETURNING id", [id]);
+    const result = await pool.query(
+      "DELETE FROM properties WHERE id = $1 AND user_id = $2 RETURNING id",
+      [id, user.id],
+    );
     if (result.rows.length === 0) {
       return NextResponse.json({ error: "Property not found." }, { status: 404 });
     }

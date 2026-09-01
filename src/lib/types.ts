@@ -24,8 +24,17 @@ export const STAGE_LABELS: Record<Stage, string> = {
   sold: "Sold",
 };
 
+export interface User {
+  id: number;
+  email: string;
+  password_hash: string;
+  name: string;
+  created_at: string;
+}
+
 export interface Property {
   id: number;
+  user_id: number;
   address: string;
   city: string | null;
   state: string | null;
