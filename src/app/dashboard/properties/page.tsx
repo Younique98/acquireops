@@ -58,7 +58,7 @@ export default async function PropertiesPage({
             className={clsx(
               "px-4 py-2 rounded-full text-sm font-semibold border transition",
               stage === filter || (!stage && filter === null)
-                ? "bg-brand-450 text-white border-brand-450"
+                ? "bg-brand-500 text-white border-brand-500"
                 : "bg-surface text-ink-secondary border-line-border hover:border-brand-300",
             )}
           >
@@ -107,7 +107,9 @@ export default async function PropertiesPage({
                   <span
                     className={clsx(
                       "font-semibold",
-                      result.monthlyCashFlow >= 0 ? "text-status-good" : "text-status-critical",
+                      result.monthlyCashFlow >= 0
+                        ? "text-status-goodText"
+                        : "text-status-criticalText",
                     )}
                   >
                     {formatCurrency(result.monthlyCashFlow)}/mo

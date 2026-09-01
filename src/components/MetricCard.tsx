@@ -9,8 +9,8 @@ interface MetricCardProps {
 
 const TONE_STYLES = {
   neutral: "text-ink-primary",
-  good: "text-status-good",
-  critical: "text-status-critical",
+  good: "text-status-goodText",
+  critical: "text-status-criticalText",
 };
 
 export const MetricCard = ({ label, value, tone = "neutral", helpText }: MetricCardProps) => (

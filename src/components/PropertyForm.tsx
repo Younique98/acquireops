@@ -136,7 +136,7 @@ export const PropertyForm = ({ property }: { property?: Property }) => {
   return (
     <form onSubmit={handleSubmit(onSubmit)} className="space-y-8 max-w-2xl">
       {error && (
-        <p className="text-status-critical text-sm font-semibold" role="alert">
+        <p className="text-status-criticalText text-sm font-semibold" role="alert">
           {error}
         </p>
       )}
@@ -147,7 +147,7 @@ export const PropertyForm = ({ property }: { property?: Property }) => {
           <div className="sm:col-span-2">
             <label className={labelClass} htmlFor="address">Address</label>
             <input id="address" className={inputClass} {...register("address", { required: "Address is required." })} />
-            {errors.address && <p className="text-status-critical text-sm mt-1">{errors.address.message}</p>}
+            {errors.address && <p className="text-status-criticalText text-sm mt-1">{errors.address.message}</p>}
           </div>
           <div>
             <label className={labelClass} htmlFor="city">City</label>
@@ -184,12 +184,12 @@ export const PropertyForm = ({ property }: { property?: Property }) => {
           <div>
             <label className={labelClass} htmlFor="purchasePrice">Purchase price ($)</label>
             <input id="purchasePrice" type="number" step="0.01" className={inputClass} {...register("purchasePrice", { required: "Required", valueAsNumber: true, min: { value: 0.01, message: "Must be positive" } })} />
-            {errors.purchasePrice && <p className="text-status-critical text-sm mt-1">{errors.purchasePrice.message}</p>}
+            {errors.purchasePrice && <p className="text-status-criticalText text-sm mt-1">{errors.purchasePrice.message}</p>}
           </div>
           <div>
             <label className={labelClass} htmlFor="monthlyRent">Monthly rent ($)</label>
             <input id="monthlyRent" type="number" step="0.01" className={inputClass} {...register("monthlyRent", { required: "Required", valueAsNumber: true, min: { value: 0, message: "Must be 0 or more" } })} />
-            {errors.monthlyRent && <p className="text-status-critical text-sm mt-1">{errors.monthlyRent.message}</p>}
+            {errors.monthlyRent && <p className="text-status-criticalText text-sm mt-1">{errors.monthlyRent.message}</p>}
           </div>
           <div>
             <label className={labelClass} htmlFor="propertyTaxAnnual">Property tax (annual, $)</label>
@@ -255,7 +255,7 @@ export const PropertyForm = ({ property }: { property?: Property }) => {
       <button
         type="submit"
         disabled={isSubmitting}
-        className="px-6 py-3 rounded-full bg-brand-450 text-white font-semibold hover:bg-brand-500 transition disabled:opacity-60"
+        className="px-6 py-3 rounded-full bg-brand-500 text-white font-semibold hover:bg-brand-600 transition disabled:opacity-60"
       >
         {isSubmitting ? "Saving..." : isEdit ? "Save changes" : "Add property"}
       </button>
