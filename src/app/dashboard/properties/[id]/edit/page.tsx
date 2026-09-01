@@ -28,7 +28,7 @@ export default async function EditPropertyPage({
 
   return (
     <main className="max-w-6xl mx-auto px-6 py-10">
-      <h1 className="text-3xl font-extrabold tracking-tight text-ink-primary mb-6">
+      <h1 className="font-display text-3xl font-semibold tracking-tight text-ink-primary mb-6">
         Edit {property.address}
       </h1>
       <PropertyForm property={property} />

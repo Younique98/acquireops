@@ -14,7 +14,7 @@ const TONE_STYLES = {
 };
 
 export const MetricCard = ({ label, value, tone = "neutral", helpText }: MetricCardProps) => (
-  <div className="rounded-2xl border border-line-border bg-surface p-5">
+  <div className="rounded-2xl border border-line bg-surface p-5">
     <p className="text-sm font-semibold text-ink-secondary">{label}</p>
     <p className={clsx("mt-1 text-3xl font-extrabold tabular-nums", TONE_STYLES[tone])}>
       {value}

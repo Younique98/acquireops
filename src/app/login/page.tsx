@@ -37,10 +37,10 @@ export default function LoginPage() {
   return (
     <main className="min-h-screen flex items-center justify-center px-6">
       <div className="w-full max-w-sm">
-        <Link href="/" className="text-lg font-bold tracking-tight text-ink-primary">
-          Acquire<span className="text-brand-text">Ops</span>
+        <Link href="/" className="font-display text-lg font-semibold tracking-tight text-ink-primary">
+          Acquire<span className="text-navy-text">Ops</span>
         </Link>
-        <h1 className="mt-6 text-2xl font-bold text-ink-primary">Log in</h1>
+        <h1 className="mt-6 font-display text-2xl font-semibold text-ink-primary">Log in</h1>
 
         <form onSubmit={handleSubmit} className="mt-6 space-y-4">
           <div>
@@ -53,7 +53,7 @@ export default function LoginPage() {
               required
               value={email}
               onChange={(e) => setEmail(e.target.value)}
-              className="w-full rounded-lg border border-line-border bg-surface px-3 py-2 text-sm text-ink-primary"
+              className="w-full rounded-lg border border-line bg-surface px-3 py-2 text-sm text-ink-primary"
             />
           </div>
           <div>
@@ -66,7 +66,7 @@ export default function LoginPage() {
               required
               value={password}
               onChange={(e) => setPassword(e.target.value)}
-              className="w-full rounded-lg border border-line-border bg-surface px-3 py-2 text-sm text-ink-primary"
+              className="w-full rounded-lg border border-line bg-surface px-3 py-2 text-sm text-ink-primary"
             />
           </div>
 
@@ -79,7 +79,7 @@ export default function LoginPage() {
           <button
             type="submit"
             disabled={submitting}
-            className="w-full py-2.5 rounded-full bg-brand-500 text-white font-semibold hover:bg-brand-600 transition disabled:opacity-60"
+            className="w-full py-2.5 rounded-full bg-navy text-white font-semibold hover:bg-navy-hover transition disabled:opacity-60"
           >
             {submitting ? "Logging in..." : "Log in"}
           </button>
@@ -87,7 +87,7 @@ export default function LoginPage() {
 
         <p className="mt-6 text-sm text-ink-secondary">
           Don&apos;t have an account?{" "}
-          <Link href="/signup" className="text-brand-text font-semibold">
+          <Link href="/signup" className="text-navy-text font-semibold">
             Sign up
           </Link>
         </p>

@@ -39,7 +39,7 @@ const ALL_STAGES: Stage[] = [
 ];
 
 const inputClass =
-  "w-full border border-line-border rounded-lg px-3 py-2 bg-surface text-ink-primary focus:outline-none focus:ring-2 focus:ring-brand-300";
+  "w-full border border-line rounded-lg px-3 py-2 bg-surface text-ink-primary focus:outline-none focus:ring-2 focus:ring-navy";
 const labelClass = "block text-sm font-semibold text-ink-secondary mb-1";
 
 export const PropertyForm = ({ property }: { property?: Property }) => {
@@ -142,7 +142,7 @@ export const PropertyForm = ({ property }: { property?: Property }) => {
       )}
 
       <section>
-        <h2 className="text-lg font-bold text-ink-primary mb-3">Property</h2>
+        <h2 className="font-display text-lg font-semibold text-ink-primary mb-3">Property</h2>
         <div className="grid gap-4 sm:grid-cols-2">
           <div className="sm:col-span-2">
             <label className={labelClass} htmlFor="address">Address</label>
@@ -179,7 +179,7 @@ export const PropertyForm = ({ property }: { property?: Property }) => {
       </section>
 
       <section>
-        <h2 className="text-lg font-bold text-ink-primary mb-3">Underwriting inputs</h2>
+        <h2 className="font-display text-lg font-semibold text-ink-primary mb-3">Underwriting inputs</h2>
         <div className="grid gap-4 sm:grid-cols-2">
           <div>
             <label className={labelClass} htmlFor="purchasePrice">Purchase price ($)</label>
@@ -235,7 +235,7 @@ export const PropertyForm = ({ property }: { property?: Property }) => {
       </section>
 
       <section>
-        <h2 className="text-lg font-bold text-ink-primary mb-1">Ownership</h2>
+        <h2 className="font-display text-lg font-semibold text-ink-primary mb-1">Ownership</h2>
         <p className="text-xs text-ink-muted mb-3">
           Only needed once this property is owned - used for equity tracking and the
           portfolio dashboard.
@@ -255,7 +255,7 @@ export const PropertyForm = ({ property }: { property?: Property }) => {
       <button
         type="submit"
         disabled={isSubmitting}
-        className="px-6 py-3 rounded-full bg-brand-500 text-white font-semibold hover:bg-brand-600 transition disabled:opacity-60"
+        className="px-6 py-3 rounded-full bg-navy text-white font-semibold hover:bg-navy-hover transition disabled:opacity-60"
       >
         {isSubmitting ? "Saving..." : isEdit ? "Save changes" : "Add property"}
       </button>

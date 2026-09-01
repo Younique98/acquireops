@@ -46,7 +46,7 @@ export default async function PropertiesPage({
 
   return (
     <main className="max-w-6xl mx-auto px-6 py-10">
-      <h1 className="text-3xl font-extrabold tracking-tight text-ink-primary mb-6">
+      <h1 className="font-display text-3xl font-semibold tracking-tight text-ink-primary mb-6">
         Properties
       </h1>
 
@@ -58,8 +58,8 @@ export default async function PropertiesPage({
             className={clsx(
               "px-4 py-2 rounded-full text-sm font-semibold border transition",
               stage === filter || (!stage && filter === null)
-                ? "bg-brand-500 text-white border-brand-500"
-                : "bg-surface text-ink-secondary border-line-border hover:border-brand-300",
+                ? "bg-navy text-white border-navy"
+                : "bg-surface text-ink-secondary border-line hover:border-navy",
             )}
           >
             {filter ? STAGE_LABELS[filter] : "All"}
@@ -91,10 +91,10 @@ export default async function PropertiesPage({
               <Link
                 key={property.id}
                 href={`/dashboard/properties/${property.id}`}
-                className="rounded-2xl border border-line-border bg-surface p-5 hover:shadow-md transition block"
+                className="rounded-2xl border border-line bg-surface p-5 hover:shadow-md transition block"
               >
                 <div className="flex items-start justify-between gap-2 mb-2">
-                  <h2 className="font-bold text-ink-primary">{property.address}</h2>
+                  <h2 className="font-display font-semibold text-ink-primary">{property.address}</h2>
                   <StageBadge stage={property.stage} />
                 </div>
                 <p className="text-sm text-ink-secondary mb-3">
