@@ -29,7 +29,7 @@ export const DeletePropertyButton = ({ id }: { id: number }) => {
         onClick={async () => {
           setIsDeleting(true);
           await fetch(`/api/properties/${id}`, { method: "DELETE" });
-          router.push("/properties");
+          router.push("/dashboard/properties");
           router.refresh();
         }}
         className="px-3 py-1.5 rounded-full bg-status-critical text-white text-sm font-semibold disabled:opacity-60"

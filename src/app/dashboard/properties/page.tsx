@@ -4,6 +4,7 @@ import { underwrite } from "@/lib/underwriting";
 import { Property, Stage, STAGE_LABELS } from "@/lib/types";
 import { StageBadge } from "@/components/StageBadge";
 import { formatCurrency, formatPercent } from "@/lib/format";
+import { getCurrentUser } from "@/lib/session";
 import clsx from "clsx";
 
 const FILTERS: (Stage | null)[] = [
@@ -17,15 +18,18 @@ const FILTERS: (Stage | null)[] = [
   "sold",
 ];
 
-async function getProperties(stage: string | undefined) {
+async function getProperties(userId: number, stage: string | undefined) {
   if (stage) {
     const result = await pool.query<Property>(
-      "SELECT * FROM properties WHERE stage = $1 ORDER BY updated_at DESC",
-      [stage],
+      "SELECT * FROM properties WHERE user_id = $1 AND stage = $2 ORDER BY updated_at DESC",
+      [userId, stage],
     );
     return result.rows;
   }
-  const result = await pool.query<Property>("SELECT * FROM properties ORDER BY updated_at DESC");
+  const result = await pool.query<Property>(
+    "SELECT * FROM properties WHERE user_id = $1 ORDER BY updated_at DESC",
+    [userId],
+  );
   return result.rows;
 }
 
@@ -34,8 +38,11 @@ export default async function PropertiesPage({
 }: {
   searchParams: Promise<{ stage?: string }>;
 }) {
+  const user = await getCurrentUser();
+  if (!user) return null;
+
   const { stage } = await searchParams;
-  const properties = await getProperties(stage);
+  const properties = await getProperties(user.id, stage);
 
   return (
     <main className="max-w-6xl mx-auto px-6 py-10">
@@ -47,7 +54,7 @@ export default async function PropertiesPage({
         {FILTERS.map(filter => (
           <Link
             key={filter ?? "all"}
-            href={filter ? `/properties?stage=${filter}` : "/properties"}
+            href={filter ? `/dashboard/properties?stage=${filter}` : "/dashboard/properties"}
             className={clsx(
               "px-4 py-2 rounded-full text-sm font-semibold border transition",
               stage === filter || (!stage && filter === null)
@@ -83,7 +90,7 @@ export default async function PropertiesPage({
             return (
               <Link
                 key={property.id}
-                href={`/properties/${property.id}`}
+                href={`/dashboard/properties/${property.id}`}
                 className="rounded-2xl border border-line-border bg-surface p-5 hover:shadow-md transition block"
               >
                 <div className="flex items-start justify-between gap-2 mb-2">

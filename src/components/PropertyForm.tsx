@@ -126,7 +126,7 @@ export const PropertyForm = ({ property }: { property?: Property }) => {
         throw new Error(body.error || "Failed to save property.");
       }
       const saved = await response.json();
-      router.push(`/properties/${saved.id}`);
+      router.push(`/dashboard/properties/${saved.id}`);
       router.refresh();
     } catch (err) {
       setError(err instanceof Error ? err.message : "Something went wrong.");

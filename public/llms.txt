@@ -1,0 +1,21 @@
+# AcquireOps
+
+> Deal pipeline, underwriting calculator, and portfolio equity tracker for
+> evaluating and growing a rental property portfolio.
+
+AcquireOps helps real estate investors run the numbers on a potential
+acquisition (cap rate, cash-on-cash return, the 1% rule, DSCR) before they
+buy, track deals through a pipeline (watching, analyzing, offer made, under
+contract, owned), and monitor equity and returns across an owned portfolio
+over time - including a signal for when a property's return on equity is
+low enough that a refinance or sale might free up capital for a better
+acquisition.
+
+Each user's data is private to their own account - properties, deal notes,
+and equity history are never visible to other users.
+
+## Pages
+
+- [Home](https://acquireops.io/) - product overview and sign-up
+- [Sign up](https://acquireops.io/signup) - create an account
+- [Log in](https://acquireops.io/login) - existing accounts

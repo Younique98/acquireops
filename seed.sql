@@ -1,5 +1,14 @@
+CREATE TABLE IF NOT EXISTS users (
+    id SERIAL PRIMARY KEY,
+    email VARCHAR(255) UNIQUE NOT NULL,
+    password_hash VARCHAR(255) NOT NULL,
+    name VARCHAR(255) NOT NULL,
+    created_at TIMESTAMPTZ NOT NULL DEFAULT now()
+);
+
 CREATE TABLE IF NOT EXISTS properties (
     id SERIAL PRIMARY KEY,
+    user_id INT NOT NULL REFERENCES users(id) ON DELETE CASCADE,
     address VARCHAR(255) NOT NULL,
     city VARCHAR(120),
     state VARCHAR(2),
@@ -30,9 +39,12 @@ CREATE TABLE IF NOT EXISTS properties (
     created_at TIMESTAMPTZ NOT NULL DEFAULT now(),
     updated_at TIMESTAMPTZ NOT NULL DEFAULT now()
 );
+CREATE INDEX IF NOT EXISTS properties_user_id_idx ON properties(user_id);
 
 -- Historical snapshots of value/equity, written whenever current_value or
 -- mortgage_balance changes, so the portfolio dashboard can chart a trend.
+-- Ownership is transitive through properties.user_id - every query reaches
+-- this table via a property_id list already scoped to the current user.
 CREATE TABLE IF NOT EXISTS equity_snapshots (
     id SERIAL PRIMARY KEY,
     property_id INT NOT NULL REFERENCES properties(id) ON DELETE CASCADE,
@@ -43,19 +55,29 @@ CREATE TABLE IF NOT EXISTS equity_snapshots (
 
 CREATE INDEX IF NOT EXISTS equity_snapshots_property_id_idx ON equity_snapshots(property_id);
 
--- One example row so the app isn't an empty shell on first run. Delete it
--- once you've added your real properties.
+-- One demo account + example property so the app isn't an empty shell on
+-- first run. Password is "demo1234" (bcrypt hash below). Sign up for your
+-- own real account instead of reusing this one - delete it once you have.
+INSERT INTO users (email, password_hash, name)
+VALUES (
+    'demo@example.com',
+    '$2a$10$iwgDgndrQn/MY9l21VPzb.KcagM60LKEfPqbf5hZIG14m7WM2oBR.',
+    'Demo Investor'
+) ON CONFLICT DO NOTHING;
+
 INSERT INTO properties (
-    address, city, state, zip, stage, notes,
+    user_id, address, city, state, zip, stage, notes,
     purchase_price, monthly_rent, property_tax_annual, insurance_annual,
     hoa_monthly, maintenance_pct, vacancy_pct, management_pct,
     down_payment_pct, interest_rate_pct, loan_term_years, closing_costs,
     current_value, mortgage_balance
-) VALUES (
-    '123 Example St', 'Example City', 'TX', '75001', 'owned',
+)
+SELECT
+    id, '123 Example St', 'Example City', 'TX', '75001', 'owned',
     'Sample property - delete once you add your real portfolio.',
     200000, 2000, 2400, 1200,
     0, 5, 5, 8,
     20, 6, 30, 4000,
     230000, 152000
-) ON CONFLICT DO NOTHING;
+FROM users WHERE email = 'demo@example.com'
+ON CONFLICT DO NOTHING;
