@@ -68,7 +68,7 @@ export default async function PropertyDetailPage({
 
   return (
     <main className="max-w-4xl mx-auto px-6 py-10">
-      <Link href="/dashboard/properties" className="text-sm font-semibold text-brand-450 hover:underline">
+      <Link href="/dashboard/properties" className="text-sm font-semibold text-brand-text hover:underline">
         &larr; All properties
       </Link>
 

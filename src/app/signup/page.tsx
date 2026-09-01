@@ -47,7 +47,7 @@ export default function SignupPage() {
     <main className="min-h-screen flex items-center justify-center px-6">
       <div className="w-full max-w-sm">
         <Link href="/" className="text-lg font-bold tracking-tight text-ink-primary">
-          Acquire<span className="text-brand-450">Ops</span>
+          Acquire<span className="text-brand-text">Ops</span>
         </Link>
         <h1 className="mt-6 text-2xl font-bold text-ink-primary">Create your account</h1>
         <p className="mt-2 text-sm text-ink-secondary">
@@ -98,7 +98,7 @@ export default function SignupPage() {
           </div>
 
           {error && (
-            <p className="text-sm text-status-critical" role="alert">
+            <p className="text-sm text-status-criticalText" role="alert">
               {error}
             </p>
           )}
@@ -106,7 +106,7 @@ export default function SignupPage() {
           <button
             type="submit"
             disabled={submitting}
-            className="w-full py-2.5 rounded-full bg-brand-450 text-white font-semibold hover:bg-brand-500 transition disabled:opacity-60"
+            className="w-full py-2.5 rounded-full bg-brand-500 text-white font-semibold hover:bg-brand-600 transition disabled:opacity-60"
           >
             {submitting ? "Creating your account..." : "Create your account"}
           </button>
@@ -114,7 +114,7 @@ export default function SignupPage() {
 
         <p className="mt-6 text-sm text-ink-secondary">
           Already have an account?{" "}
-          <Link href="/login" className="text-brand-450 font-semibold">
+          <Link href="/login" className="text-brand-text font-semibold">
             Log in
           </Link>
         </p>

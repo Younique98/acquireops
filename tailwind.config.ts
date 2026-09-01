@@ -33,12 +33,18 @@ const config: Config = {
           500: "var(--blue-500)",
           550: "var(--blue-550)",
           600: "var(--blue-600)",
+          // Theme-aware: for TEXT (wordmark, links) on the page background.
+          // The numbered steps stay static Tailwind values for solid
+          // button/badge fills, which don't need to shift with theme.
+          text: "var(--brand-text)",
         },
         status: {
           good: "var(--status-good)",
+          goodText: "var(--status-good-text)",
           warning: "var(--status-warning)",
           serious: "var(--status-serious)",
           critical: "var(--status-critical)",
+          criticalText: "var(--status-critical-text)",
         },
       },
       fontFamily: {

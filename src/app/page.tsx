@@ -25,7 +25,7 @@ export default function Home() {
       <header className="border-b border-line-border">
         <div className="max-w-5xl mx-auto flex items-center justify-between px-6 py-4">
           <span className="text-lg font-bold tracking-tight text-ink-primary">
-            Acquire<span className="text-brand-450">Ops</span>
+            Acquire<span className="text-brand-text">Ops</span>
           </span>
           <nav className="flex items-center gap-4 text-sm font-semibold">
             <Link href="/login" className="text-ink-secondary hover:text-ink-primary transition">
@@ -33,7 +33,7 @@ export default function Home() {
             </Link>
             <Link
               href="/signup"
-              className="px-4 py-2 rounded-full bg-brand-450 text-white hover:bg-brand-500 transition"
+              className="px-4 py-2 rounded-full bg-brand-500 text-white hover:bg-brand-600 transition"
             >
               Get started
             </Link>
@@ -53,7 +53,7 @@ export default function Home() {
         <div className="mt-8 flex items-center justify-center gap-4">
           <Link
             href="/signup"
-            className="px-6 py-3 rounded-full bg-brand-450 text-white font-semibold hover:bg-brand-500 transition"
+            className="px-6 py-3 rounded-full bg-brand-500 text-white font-semibold hover:bg-brand-600 transition"
           >
             Create your account
           </Link>
